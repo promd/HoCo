@@ -1,0 +1,2 @@
+# HoCo
+Home Control Framework
