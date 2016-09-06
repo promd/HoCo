@@ -1,0 +1,12 @@
+[submodule "HoCo-esp8266-bootloader"]
+	path = HoCo-esp8266-bootloader
+	url = https://github.com/ToSa27/HoCo-esp8266-bootloader.git
+[submodule "HoCo-esp8266-factory"]
+	path = HoCo-esp8266-factory
+	url = https://github.com/ToSa27/HoCo-esp8266-factory.git
+[submodule "HoCo-esp8266-firmware"]
+	path = HoCo-esp8266-firmware
+	url = https://github.com/ToSa27/HoCo-esp8266-firmware.git
+[submodule "HoCo-server"]
+	path = HoCo-server
+	url = https://github.com/ToSa27/HoCo-server.git

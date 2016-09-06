@@ -1,11 +1,8 @@
 # HoCo
 Home Control Framework
 
-Modular home control framework based on esp8266 modules and node.js server as central controller:
+Modular home control framework based on esp8266 modules and node.js server as central controller communicating via MQTT:
 
-For esp8266 firmware see https://github.com/ToSa27/HoCo-esp8266
-
-For node.js server see https://github.com/ToSa27/HoCo-server
 
 Key capabilities:
 - robust bootloader
