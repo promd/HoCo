@@ -16,3 +16,22 @@ sudo npm install -g pm2
 pm2 dump
 sudo pm2 startup systemd -u $HOCO_USER
 pm2 dump
+pm2 save
+read -p "Install ZWave Adapter?" yn
+case $yn in
+  [Yy]* )
+    $HOCO_HOME/setup/setup_zwave.sh
+    break;;
+  * )
+    exit
+    ;;
+esac
+read -p "Install Homematic Adapter?" yn
+case $yn in
+  [Yy]* )
+    $HOCO_HOME/setup/setup_homematic.sh
+    break;;
+  * )
+    exit
+    ;;
+esac
