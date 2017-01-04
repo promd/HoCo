@@ -6,6 +6,9 @@ export HOCO_HOME=/opt/hoco
 apt-get -y update
 apt-get -y upgrade
 apt-get -y dist-upgrade
+apt-get -y update
+apt-get -y upgrade
+apt-get -y dist-upgrade
 apt-get clean
 useradd -m $HOCO_USER
 echo $HOCO_USER' ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/hoco
