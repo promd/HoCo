@@ -14,4 +14,4 @@ Base Install
 
 To log what's going on adjust to:
 - `sudo ./setup_root.sh 2>&1 | tee -a setup_root.log`
-- `$HOCO_HOME/setup/setup_hoco.sh 2>&1 | tee -a setup_root.log`
+- `$HOCO_HOME/setup/setup_hoco.sh 2>&1 | tee -a setup_hoco.log`
