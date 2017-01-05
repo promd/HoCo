@@ -1,5 +1,5 @@
 #! /bin/bash
-
+. /etc/environment
 mkdir $HOCO_HOME/data
 mkdir $HOCO_HOME/adapter
 mkdir $HOCO_HOME/controller
