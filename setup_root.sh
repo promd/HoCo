@@ -33,20 +33,16 @@ apt-get -y install git
 mkdir -p $HOCO_HOME
 cd $HOCO_HOME
 git clone https://github.com/ToSa27/HoCo.git $HOCO_HOME/setup
-echo "1" > $HOCO_HOME/setup/status
 chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 
 cp $HOCO_HOME/setup/setup_hoco.init /etc/init.d/setup_hoco
-sudo chmod a+x /etc/init.d/setup_hoco
-sudo update-rc.d setup_hoco defaults
-sudo systemctl daemon-reload
+chmod a+x /etc/init.d/setup_hoco
+update-rc.d setup_hoco defaults
+systemctl daemon-reload
 
 echo 'HOCO_NEXT_SCRIPT=setup_update.sh' > $HOCO_HOME/setup/status.sh
-chown $HOCO_USER:$HOCO_USER $HOCO_HOME/setup/status
-chmod 755 $HOCO_HOME/setup/status
-
-ln -fs /etc/systemd/system/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
-sed -i 's/--autologin pi/--autologin hoco/g' /etc/systemd/system/autologin@.service
+chown $HOCO_USER:$HOCO_USER $HOCO_HOME/setup/status.sh
+chmod 755 $HOCO_HOME/setup/status.sh
 
 CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
 NEW_HOSTNAME=$(whiptail --inputbox "Please enter a hostname" 20 60 "$CURRENT_HOSTNAME" 3>&1 1>&2 2>&3)

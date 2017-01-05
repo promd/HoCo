@@ -14,8 +14,8 @@
 case "\$1" in
   start)
     log_daemon_msg "Starting HoCo Setup"
-    . /opt/hoco/setup/status
-    sudo su hoco -c "$HOCO_NEXT_SCRIPT |& tee -a /opt/hoco/setup/$HOCO_NEXT_SCRIPT.log"
+    . /opt/hoco/setup/status.sh
+    sudo su hoco -c "/opt/hoco/setup/$HOCO_NEXT_SCRIPT |& tee -a /opt/hoco/setup/$HOCO_NEXT_SCRIPT.log"
     ;;
   *)
     echo "Usage: \$0 start" >&2
