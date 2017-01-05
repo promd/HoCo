@@ -1,7 +1,7 @@
 #! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          HoCo Setup
-# Required-Start:
+# Required-Start:    $remote_fs $syslog
 # Required-Stop:
 # Default-Start: 3
 # Default-Stop:
@@ -15,7 +15,7 @@ case "$1" in
   start)
     log_daemon_msg "Starting HoCo Setup"
     . /opt/hoco/setup/status.sh
-    sudo su hoco -c "/opt/hoco/setup/$HOCO_NEXT_SCRIPT |& tee -a /opt/hoco/setup/$HOCO_NEXT_SCRIPT.log"
+    su hoco -c "/opt/hoco/setup/$HOCO_NEXT_SCRIPT |& tee -a /opt/hoco/setup/$HOCO_NEXT_SCRIPT.log"
     ;;
   *)
     echo "Usage: $0 start" >&2
