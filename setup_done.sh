@@ -1,5 +1,5 @@
 #! /bin/bash
 
-sudo update-rc.d hoco_setup remove
-sudo rm /etc/init.d/hoco_setup
+sudo update-rc.d setup_hoco remove
+sudo rm /etc/init.d/setup_hoco
 rm $HOCO_HOME/setup/status

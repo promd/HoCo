@@ -30,4 +30,7 @@
 /.project
 
 # HoCo setup progress
-status
+status.sh
+
+# HoCo setup log files
+*.log
