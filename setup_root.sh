@@ -35,7 +35,7 @@ cd $HOCO_HOME
 git clone https://github.com/ToSa27/HoCo.git $HOCO_HOME/setup
 chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 
-sed -i '^/exit 0/i \
+sed -i '/^exit 0/i \
 . /etc/environment \
 su hoco -c "$HOCO_HOME/setup/setup_update.sh |& tee -a $HOCO_HOME/setup/setup_update.log"' /etc/rc.local
 
