@@ -28,3 +28,6 @@
 *.out
 *.app
 /.project
+
+# HoCo setup progress
+status
