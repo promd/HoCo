@@ -12,14 +12,14 @@ echo 'HOCO_USER='$HOCO_USER >> /etc/environment
 echo 'HOCO_HOME='$HOCO_HOME >> /etc/environment
 
 whiptail --msgbox "You will now be asked to enter a new password for the pi user" 20 60 1
-passwd pi
+passwd pi &&
 
 useradd -m $HOCO_USER
 echo $HOCO_USER' ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/hoco
 adduser $HOCO_USER dialout
 adduser $HOCO_USER gpio
 whiptail --msgbox "You will now be asked to enter a new password for the $HOCO_USER user" 20 60 1
-passwd $HOCO_USER
+passwd $HOCO_USER &&
 
 CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
 NEW_HOSTNAME=$(whiptail --inputbox "Please enter a hostname" 20 60 "$CURRENT_HOSTNAME" 3>&1 1>&2 2>&3)
