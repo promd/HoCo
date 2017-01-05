@@ -12,11 +12,11 @@ if [ $? -eq 0 ]; then
   sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
 fi
 whiptail --msgbox "You will now be asked to enter a new password for the pi user" 20 60 1
-passwd pi &&
+passwd pi
 whiptail --msgbox "Password changed successfully" 20 60 1
 dpkg-reconfigure tzdata
-update-rc.d ssh enable &&
-invoke-rc.d ssh start &&
+update-rc.d ssh enable
+invoke-rc.d ssh start
 sed -i /boot/cmdline.txt -e "s/console=ttyAMA0,[0-9]\+ //"
 sed -i /boot/cmdline.txt -e "s/console=serial0,[0-9]\+ //"
 echo "enable_uart=0" >> /boot/config.txt
@@ -38,7 +38,7 @@ echo $HOCO_USER' ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/hoco
 adduser $HOCO_USER dialout
 adduser $HOCO_USER gpio
 whiptail --msgbox "You will now be asked to enter a new password for the $HOCO_USER user" 20 60 1
-passwd $HOCO_USER &&
+passwd $HOCO_USER
 whiptail --msgbox "Password changed successfully" 20 60 1
 echo 'HOCO_USER='$HOCO_USER >> /etc/environment
 echo 'HOCO_HOME='$HOCO_HOME >> /etc/environment
