@@ -1,12 +1,12 @@
 #! /bin/bash
 
+export HOCO_USER=hoco
+export HOCO_HOME=/opt/hoco
+
 if [ $(id -u) -ne 0 ]; then
   echo "Script must be run as root."
   exit 1
 fi
-
-export HOCO_USER=hoco
-export HOCO_HOME=/opt/hoco
 
 echo 'HOCO_USER='$HOCO_USER >> /etc/environment
 echo 'HOCO_HOME='$HOCO_HOME >> /etc/environment
@@ -35,18 +35,23 @@ sed -i /boot/cmdline.txt -e "s/console=serial0,[0-9]\+ //"
 echo "enable_uart=0" >> /boot/config.txt
 raspi-config --expand-rootfs
 
-apt-get -y update
-apt-get -y upgrade
-apt-get -y dist-upgrade
-apt-get -y update
-apt-get -y upgrade
-apt-get -y dist-upgrade
 apt-get -y install git
-apt-get clean
-
 mkdir -p $HOCO_HOME
 cd $HOCO_HOME
 git clone https://github.com/ToSa27/HoCo.git $HOCO_HOME/setup
 echo "1" > $HOCO_HOME/setup/status
 chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
+
+cp hoco_setup.init /etc/init.d/hoco_setup
+sudo chmod a+x /etc/init.d/hoco_setup
+sudo update-rc.d hoco_setup defaults
+sudo systemctl daemon-reload
+
+echo 'HOCO_NEXT_SCRIPT=setup_update.sh' > $HOCO_HOME/setup/status
+chown $HOCO_USER:$HOCO_USER $HOCO_HOME/setup/status
+chmod 755 $HOCO_HOME/setup/status
+
+ln -fs /etc/systemd/system/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
+sed -i 's/--autologin pi/--autologin hoco/g' /etc/systemd/system/autologin@.service
+
 reboot

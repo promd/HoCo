@@ -1,0 +1,26 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          HoCo Setup
+# Required-Start:
+# Required-Stop:
+# Default-Start: 3
+# Default-Stop:
+# Short-Description: Starts next phase of HoCo setup
+# Description:
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+case "\$1" in
+  start)
+    log_daemon_msg "Starting HoCo Setup"
+    . /opt/hoco/setup/status
+    sudo su hoco -c "$HOCO_NEXT_SCRIPT"
+    update-rc.d resize2fs_once remove
+    rm /etc/init.d/resize2fs_once
+    ;;
+  *)
+    echo "Usage: \$0 start" >&2
+    exit 3
+    ;;
+esac
