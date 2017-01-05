@@ -34,3 +34,6 @@ status.sh
 
 # HoCo setup log files
 *.log
+
+# HoCo setup flag files
+*.flag

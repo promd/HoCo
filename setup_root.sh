@@ -35,7 +35,8 @@ cd $HOCO_HOME
 git clone https://github.com/ToSa27/HoCo.git $HOCO_HOME/setup
 chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 
-sed -i '/exit 0/i \
+sed -i '/^exit 0/i \
+. /etc/environment \
 su hoco -c "$HOCO_HOME/setup/setup_update.sh |& tee -a $HOCO_HOME/setup/setup_update.log"' /etc/rc.local
 
 CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
@@ -43,6 +44,15 @@ NEW_HOSTNAME=$(whiptail --inputbox "Please enter a hostname" 20 60 "$CURRENT_HOS
 if [ $? -eq 0 ]; then
   echo $NEW_HOSTNAME > /etc/hostname
   sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
+fi
+
+whiptail --yesno "Install HoCo ZWave Adapter?" --defaultyes 20 60 2
+if [ $? -eq 0 ]; then
+    touch $HOCO_HOME/setup/setup_zwave.flag
+fi
+whiptail --yesno "Install HoCo Homematic Adapter?" --defaultyes 20 60 2
+if [ $? -eq 0 ]; then
+    touch $HOCO_HOME/setup/setup_homematic.flag
 fi
 
 reboot
