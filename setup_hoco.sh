@@ -16,22 +16,4 @@ echo 'export HOCO_MQTT_PREFIX='${HOCO_MQTT_PREFIX}'' >> $HOCO_HOME/data/config.s
 chmod 755 $HOCO_HOME/data/config.sh
 curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
 sudo apt-get -y install nodejs
-read -p "Install ZWave Adapter? " yn
-case $yn in
-  [Yy]* )
-    $HOCO_HOME/setup/setup_zwave.sh
-    ;;
-  * )
-    exit
-    ;;
-esac
-read -p "Install Homematic Adapter? " yn
-case $yn in
-  [Yy]* )
-    $HOCO_HOME/setup/setup_homematic.sh
-    ;;
-  * )
-    exit
-    ;;
-esac
 sudo reboot
