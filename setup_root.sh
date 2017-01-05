@@ -35,14 +35,8 @@ cd $HOCO_HOME
 git clone https://github.com/ToSa27/HoCo.git $HOCO_HOME/setup
 chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 
-cp $HOCO_HOME/setup/setup_hoco.init /etc/init.d/setup_hoco
-chmod a+x /etc/init.d/setup_hoco
-update-rc.d setup_hoco defaults
-systemctl daemon-reload
-
-echo 'HOCO_NEXT_SCRIPT=setup_update.sh' > $HOCO_HOME/setup/status.sh
-chown $HOCO_USER:$HOCO_USER $HOCO_HOME/setup/status.sh
-chmod 755 $HOCO_HOME/setup/status.sh
+sed -i '/exit 0/i \
+su hoco -c "$HOCO_HOME/setup/setup_update.sh |& tee -a $HOCO_HOME/setup/setup_update.log"' /etc/rc.local
 
 CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
 NEW_HOSTNAME=$(whiptail --inputbox "Please enter a hostname" 20 60 "$CURRENT_HOSTNAME" 3>&1 1>&2 2>&3)

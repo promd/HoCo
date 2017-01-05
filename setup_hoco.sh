@@ -16,5 +16,5 @@ echo 'export HOCO_MQTT_PREFIX='${HOCO_MQTT_PREFIX}'' >> $HOCO_HOME/data/config.s
 chmod 755 $HOCO_HOME/data/config.sh
 curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
 sudo apt-get -y install nodejs
-echo 'HOCO_NEXT_SCRIPT=setup_adapter.sh' > $HOCO_HOME/setup/status.sh
+sudo sed -i 's/setup_hoco./setup_adapter./g' /etc/rc.local
 sudo reboot
