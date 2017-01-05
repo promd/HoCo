@@ -41,7 +41,7 @@ sudo chmod a+x /etc/init.d/setup_hoco
 sudo update-rc.d setup_hoco defaults
 sudo systemctl daemon-reload
 
-echo 'HOCO_NEXT_SCRIPT=setup_update.sh' > $HOCO_HOME/setup/status
+echo 'HOCO_NEXT_SCRIPT=setup_update.sh' > $HOCO_HOME/setup/status.sh
 chown $HOCO_USER:$HOCO_USER $HOCO_HOME/setup/status
 chmod 755 $HOCO_HOME/setup/status
 
