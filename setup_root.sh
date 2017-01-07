@@ -71,11 +71,11 @@ if [ $? -eq 0 ]; then
   sed -i "s/127.0.1.1.*$HOCO_OLD_HOSTNAME/127.0.1.1\t$HOCO_HOSTNAME/g" /etc/hosts
 fi
 
-whiptail --yesno "Install HoCo ZWave Adapter?" --defaultyes 20 60 2
+whiptail --yesno "Install HoCo ZWave Adapter?" 20 60 2
 if [ $? -eq 0 ]; then
     touch $HOCO_HOME/setup/setup_zwave.flag
 fi
-whiptail --yesno "Install HoCo Homematic Adapter?" --defaultyes 20 60 2
+whiptail --yesno "Install HoCo Homematic Adapter?" 20 60 2
 if [ $? -eq 0 ]; then
     touch $HOCO_HOME/setup/setup_homematic.flag
 fi
