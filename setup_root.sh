@@ -39,6 +39,35 @@ sed -i '/^exit 0/i \
 . /etc/environment \
 su hoco -c "$HOCO_HOME/setup/setup_update.sh |& tee -a $HOCO_HOME/setup/setup_update.log"' /etc/rc.local
 
+whiptail --yesno "Set fix IP address?" --defaultyes 20 60 2
+if [ $? -eq 0 ]; then
+    NEW_IP=$(whiptail --inputbox "Please enter IPv4 address including netmask in xxx.xxx.xxx.xxx/xx format" 20 60 "" 3>&1 1>&2 2>&3)
+    NEW_GATEWAY=$(whiptail --inputbox "Please enter IPv4 gateway" 20 60 "" 3>&1 1>&2 2>&3)
+    NEW_DNS=$(whiptail --inputbox "Please enter IPv4 DNS server" 20 60 "$NEW_GATEWAY" 3>&1 1>&2 2>&3)
+    echo 'interface eth0' >> /etc/dhcpcd.conf
+    echo 'static ip_address='$NEW_IP'' >> /etc/dhcpcd.conf
+    echo 'static routers='$NEW_GATEWAY'' >> /etc/dhcpcd.conf
+    echo 'static domain_name_servers='$NEW_DNS'' >> /etc/dhcpcd.conf
+fi
+
+mkdir $HOCO_HOME/data
+mkdir $HOCO_HOME/adapter
+mkdir $HOCO_HOME/controller
+mkdir $HOCO_HOME/logic
+mkdir $HOCO_HOME/historian
+HOCO_MQTT_URL=$(whiptail --inputbox "Please enter MQTT URL" 20 60 3>&1 1>&2 2>&3)
+HOCO_MQTT_USER=$(whiptail --inputbox "Please enter MQTT User" 20 60 "hoco" 3>&1 1>&2 2>&3)
+HOCO_MQTT_PASS=$(whiptail --inputbox "Please enter MQTT Password" 20 60 3>&1 1>&2 2>&3)
+HOCO_MQTT_PREFIX=$(whiptail --inputbox "Please enter MQTT Prefix" 20 60 "hoco" 3>&1 1>&2 2>&3)
+echo 'export HOCO_MQTT_URL='${HOCO_MQTT_URL}'' > $HOCO_HOME/data/config.sh
+echo 'export HOCO_MQTT_USER='${HOCO_MQTT_USER}'' >> $HOCO_HOME/data/config.sh
+echo 'export HOCO_MQTT_PASS='${HOCO_MQTT_PASS}'' >> $HOCO_HOME/data/config.sh
+echo 'export HOCO_MQTT_PREFIX='${HOCO_MQTT_PREFIX}'' >> $HOCO_HOME/data/config.sh
+chmod 755 $HOCO_HOME/data/config.sh
+chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
+curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
+apt-get -y install nodejs
+
 CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
 NEW_HOSTNAME=$(whiptail --inputbox "Please enter a hostname" 20 60 "$CURRENT_HOSTNAME" 3>&1 1>&2 2>&3)
 if [ $? -eq 0 ]; then
@@ -54,5 +83,9 @@ whiptail --yesno "Install HoCo Homematic Adapter?" --defaultyes 20 60 2
 if [ $? -eq 0 ]; then
     touch $HOCO_HOME/setup/setup_homematic.flag
 fi
+
+sed -i '/^exit 0/i \
+. /etc/environment \
+su hoco -c "$HOCO_HOME/setup/setup_update.sh |& tee -a $HOCO_HOME/setup/setup_update.log"' /etc/rc.local
 
 reboot
