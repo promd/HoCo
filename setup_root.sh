@@ -60,7 +60,6 @@ echo 'export HOCO_MQTT_USER='${HOCO_MQTT_USER}'' >> $HOCO_HOME/data/config.sh
 echo 'export HOCO_MQTT_PASS='${HOCO_MQTT_PASS}'' >> $HOCO_HOME/data/config.sh
 echo 'export HOCO_MQTT_PREFIX='${HOCO_MQTT_PREFIX}'' >> $HOCO_HOME/data/config.sh
 chmod 755 $HOCO_HOME/data/config.sh
-chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
 apt-get -y install nodejs
 
@@ -71,14 +70,19 @@ if [ $? -eq 0 ]; then
   sed -i "s/127.0.1.1.*$HOCO_OLD_HOSTNAME/127.0.1.1\t$HOCO_HOSTNAME/g" /etc/hosts
 fi
 
+touch $HOCO_HOME/setup/setup_adapter_defaults.sh
 whiptail --yesno "Install HoCo ZWave Adapter?" 20 60 2
 if [ $? -eq 0 ]; then
-    touch $HOCO_HOME/setup/setup_zwave.flag
+    echo 'export HOCO_ZWAVE=y' >> $HOCO_HOME/setup/setup_adapter_defaults.sh
+    HOCO_ZWAVE_DEVICE=$(whiptail --inputbox "Please enter ZWave device" 20 60 "/dev/ttyACM0" 3>&1 1>&2 2>&3)
+    echo 'export HOCO_ZWAVE_DEVICE='$HOCO_ZWAVE_DEVICE'' >> $HOCO_HOME/setup/setup_adapter_defaults.sh
 fi
 whiptail --yesno "Install HoCo Homematic Adapter?" 20 60 2
 if [ $? -eq 0 ]; then
-    touch $HOCO_HOME/setup/setup_homematic.flag
+    echo 'export HOCO_HOMEMATIC=y' >> $HOCO_HOME/setup/setup_adapter_defaults.sh
 fi
+
+chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 
 sed -i '/^exit 0/i \
 . /etc/environment \
