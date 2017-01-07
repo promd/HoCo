@@ -35,7 +35,7 @@ cd $HOCO_HOME
 git clone https://github.com/ToSa27/HoCo.git $HOCO_HOME/setup
 chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 
-whiptail --yesno "Set fix IP address?" --defaultyes 20 60 2
+whiptail --yesno "Set fix IP address?" 20 60 2
 if [ $? -eq 0 ]; then
     HOCO_IP=$(whiptail --inputbox "Please enter IPv4 address including netmask in xxx.xxx.xxx.xxx/xx format" 20 60 3>&1 1>&2 2>&3)
     HOCO_GATEWAY=$(whiptail --inputbox "Please enter IPv4 gateway" 20 60 3>&1 1>&2 2>&3)
