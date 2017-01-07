@@ -35,19 +35,15 @@ cd $HOCO_HOME
 git clone https://github.com/ToSa27/HoCo.git $HOCO_HOME/setup
 chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 
-sed -i '/^exit 0/i \
-. /etc/environment \
-su hoco -c "$HOCO_HOME/setup/setup_update.sh |& tee -a $HOCO_HOME/setup/setup_update.log"' /etc/rc.local
-
 whiptail --yesno "Set fix IP address?" --defaultyes 20 60 2
 if [ $? -eq 0 ]; then
-    NEW_IP=$(whiptail --inputbox "Please enter IPv4 address including netmask in xxx.xxx.xxx.xxx/xx format" 20 60 "" 3>&1 1>&2 2>&3)
-    NEW_GATEWAY=$(whiptail --inputbox "Please enter IPv4 gateway" 20 60 "" 3>&1 1>&2 2>&3)
-    NEW_DNS=$(whiptail --inputbox "Please enter IPv4 DNS server" 20 60 "$NEW_GATEWAY" 3>&1 1>&2 2>&3)
+    HOCO_IP=$(whiptail --inputbox "Please enter IPv4 address including netmask in xxx.xxx.xxx.xxx/xx format" 20 60 3>&1 1>&2 2>&3)
+    HOCO_GATEWAY=$(whiptail --inputbox "Please enter IPv4 gateway" 20 60 3>&1 1>&2 2>&3)
+    HOCO_DNS=$(whiptail --inputbox "Please enter IPv4 DNS server" 20 60 "$HOCO_GATEWAY" 3>&1 1>&2 2>&3)
     echo 'interface eth0' >> /etc/dhcpcd.conf
-    echo 'static ip_address='$NEW_IP'' >> /etc/dhcpcd.conf
-    echo 'static routers='$NEW_GATEWAY'' >> /etc/dhcpcd.conf
-    echo 'static domain_name_servers='$NEW_DNS'' >> /etc/dhcpcd.conf
+    echo 'static ip_address='$HOCO_IP'' >> /etc/dhcpcd.conf
+    echo 'static routers='$HOCO_GATEWAY'' >> /etc/dhcpcd.conf
+    echo 'static domain_name_servers='$HOCO_DNS'' >> /etc/dhcpcd.conf
 fi
 
 mkdir $HOCO_HOME/data
@@ -68,11 +64,11 @@ chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
 apt-get -y install nodejs
 
-CURRENT_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
-NEW_HOSTNAME=$(whiptail --inputbox "Please enter a hostname" 20 60 "$CURRENT_HOSTNAME" 3>&1 1>&2 2>&3)
+HOCO_OLD_HOSTNAME=`cat /etc/hostname | tr -d " \t\n\r"`
+HOCO_HOSTNAME=$(whiptail --inputbox "Please enter a hostname" 20 60 "$HOCO_OLD_HOSTNAME" 3>&1 1>&2 2>&3)
 if [ $? -eq 0 ]; then
-  echo $NEW_HOSTNAME > /etc/hostname
-  sed -i "s/127.0.1.1.*$CURRENT_HOSTNAME/127.0.1.1\t$NEW_HOSTNAME/g" /etc/hosts
+  echo $HOCO_HOSTNAME > /etc/hostname
+  sed -i "s/127.0.1.1.*$HOCO_OLD_HOSTNAME/127.0.1.1\t$HOCO_HOSTNAME/g" /etc/hosts
 fi
 
 whiptail --yesno "Install HoCo ZWave Adapter?" --defaultyes 20 60 2

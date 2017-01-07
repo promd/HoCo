@@ -29,8 +29,8 @@
 *.app
 /.project
 
-# HoCo setup progress
-status.sh
+# HoCo setup defaults
+setup_defaults.sh
 
 # HoCo setup log files
 *.log
