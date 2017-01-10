@@ -29,6 +29,8 @@ sed -i /boot/cmdline.txt -e "s/console=serial0,[0-9]\+ //"
 echo "enable_uart=0" >> /boot/config.txt
 raspi-config --expand-rootfs
 
+sed -i '/# The named pipe \/dev\/xconsole/,$d' /etc/rsyslog.conf
+
 apt-get -y install git
 mkdir -p $HOCO_HOME
 cd $HOCO_HOME
