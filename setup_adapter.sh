@@ -27,5 +27,12 @@ if [ "$HOCO_ZIGBEE" = "y" ]; then
     git clone https://github.com/ToSa27/HoCo-Adapter-Zigbee.git $HOCO_HOME/adapter/zigbee
     $HOCO_HOME/adapter/zigbee/setup/setup.sh
 fi
-sudo sed -i 's/setup_adapter./setup_done./g' /etc/rc.local
+if [ "$HOCO_BLUETOOTH" = "y" ]; then
+    echo =====================
+    echo  Adapter - Bluetooth
+    echo =====================
+    git clone https://github.com/ToSa27/HoCo-Adapter-Bluetooth.git $HOCO_HOME/adapter/bluetooth
+    $HOCO_HOME/adapter/bluetooth/setup/setup.sh
+fi
+sudo sed -i 's/setup_adapter./setup_logic./g' /etc/rc.local
 sudo reboot

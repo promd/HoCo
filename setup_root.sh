@@ -83,6 +83,19 @@ whiptail --yesno "Install HoCo Homematic Adapter?" 20 60 2
 if [ $? -eq 0 ]; then
     echo 'export HOCO_HOMEMATIC=y' >> $HOCO_HOME/setup/setup_adapter_defaults.sh
 fi
+whiptail --yesno "Install HoCo ZigBee Adapter?" 20 60 2
+if [ $? -eq 0 ]; then
+    echo 'export HOCO_ZIGBEE=y' >> $HOCO_HOME/setup/setup_adapter_defaults.sh
+fi
+whiptail --yesno "Install HoCo Bluetooth Adapter?" 20 60 2
+if [ $? -eq 0 ]; then
+    echo 'export HOCO_BLUETOOTH=y' >> $HOCO_HOME/setup/setup_adapter_defaults.sh
+fi
+
+whiptail --yesno "Install HoCo NodeRed Logic?" 20 60 2
+if [ $? -eq 0 ]; then
+    echo 'export HOCO_NODERED=y' >> $HOCO_HOME/setup/setup_logic_defaults.sh
+fi
 
 chown -R $HOCO_USER:$HOCO_USER $HOCO_HOME
 
