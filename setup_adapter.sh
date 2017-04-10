@@ -34,5 +34,12 @@ if [ "$HOCO_BLUETOOTH" = "y" ]; then
     git clone https://github.com/ToSa27/HoCo-Adapter-Bluetooth.git $HOCO_HOME/adapter/bluetooth
     $HOCO_HOME/adapter/bluetooth/setup/setup.sh
 fi
+if [ "$HOCO_TOSAESP" = "y" ]; then
+    echo ====================
+    echo  Adapter - ToSa ESP
+    echo ====================
+    git clone https://github.com/ToSa27/HoCo-Adapter-ToSaESP.git $HOCO_HOME/adapter/tosaesp
+    $HOCO_HOME/adapter/tosaesp/setup/setup.sh
+fi
 sudo sed -i 's/setup_adapter./setup_logic./g' /etc/rc.local
 sudo reboot

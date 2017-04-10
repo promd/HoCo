@@ -91,6 +91,10 @@ whiptail --yesno "Install HoCo Bluetooth Adapter?" 20 60 2
 if [ $? -eq 0 ]; then
     echo 'export HOCO_BLUETOOTH=y' >> $HOCO_HOME/setup/setup_adapter_defaults.sh
 fi
+whiptail --yesno "Install HoCo ToSaESP Adapter?" 20 60 2
+if [ $? -eq 0 ]; then
+    echo 'export HOCO_TOSAESP=y' >> $HOCO_HOME/setup/setup_adapter_defaultss.sh
+fi
 
 whiptail --yesno "Install HoCo NodeRed Logic?" 20 60 2
 if [ $? -eq 0 ]; then
