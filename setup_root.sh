@@ -53,6 +53,7 @@ mkdir $HOCO_HOME/adapter
 mkdir $HOCO_HOME/controller
 mkdir $HOCO_HOME/logic
 mkdir $HOCO_HOME/historian
+mkdir $HOCO_HOME/setup
 HOCO_MQTT_URL=$(whiptail --inputbox "Please enter MQTT URL" 20 60 3>&1 1>&2 2>&3)
 HOCO_MQTT_USER=$(whiptail --inputbox "Please enter MQTT User" 20 60 "hoco" 3>&1 1>&2 2>&3)
 HOCO_MQTT_PASS=$(whiptail --inputbox "Please enter MQTT Password" 20 60 3>&1 1>&2 2>&3)
@@ -93,7 +94,7 @@ if [ $? -eq 0 ]; then
 fi
 whiptail --yesno "Install HoCo ToSaESP Adapter?" 20 60 2
 if [ $? -eq 0 ]; then
-    echo 'export HOCO_TOSAESP=y' >> $HOCO_HOME/setup/setup_adapter_defaultss.sh
+    echo 'export HOCO_TOSAESP=y' >> $HOCO_HOME/setup/setup_adapter_defaults.sh
 fi
 
 whiptail --yesno "Install HoCo NodeRed Logic?" 20 60 2
